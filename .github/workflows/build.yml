@@ -1,9 +1,10 @@
+name: Build ZMK firmware
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   # Derive a short, meaningful name for the firmware archive from the commit
-  # that triggered the build (e.g. "hrm-tuning-a-typing-first-e70cdad.zip")
-  # instead of a generic "firmware.zip".
+  # that triggered the build (e.g. "arrow-t-numpad-e70cdad.zip") instead of a
+  # generic "firmware.zip".
   prepare:
     runs-on: ubuntu-latest
     outputs:
