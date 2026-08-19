@@ -70,39 +70,20 @@
                 compatible = "zmk,keymap";
 
                 base_layer {
-/* BASE — QWERTY 60%-style. Dedicated mods (CTRL/GUI/ALT/SHIFT) are primary;
- *        home-row A S D F / J K L ; also act as mods when held. The inverted-T
- *        arrow cluster (Up over Left-Down-Right, bottom right) is hard-wired
- *        here and on NUM so it never moves or changes with mods/layers.
- * -------------------------------------------------------------------------------------------------------------------------------------
- * |  `~  |   Q   |   W   |   E   |   R   |   T   |-----------------------------------|   Y   |   U   |   I   |   O   |   P   | BSPC  |
- * | TAB  |   A   |   S   |   D   |   F   |   G   |-----------------------------------|   H   |   J   |   K   |   L   |   ;   | ENTER |
- * | SHFT |   Z   |   X   |   C   |   V   |   B   |   '   |-------------------|   /   |   N   |   M   |   ,   |   .   |  Up   | SHFT  |
- * | CTRL | GUI   | ALT   |-------|  ESC  |   \   |SHFT/TB| ENTER |---|SPC/NUM| BSPC  |  ALT  |  GUI  |-------| Left  | Down  | Right |
- */
                         bindings = <
-&kp  GRAVE    &kp  Q        &kp  W        &kp  E        &kp  R        &kp  T                                                                         &kp  Y        &kp  U        &kp  I        &kp  O        &kp  P        &kp  BSPC
-&kp  TAB      HRML(A,           S,            D,            F)        &kp  G                                                                         &kp  H        HRMR(J,           K,            L,            SEMI)     &kp  ENTER
-&kp  LSHFT    &kp  Z        &kp  X        &kp  C        &kp  V        &kp  B        &kp  SQT                                           &kp  FSLH     &kp  N        &kp  M        &kp  COMMA    &kp  DOT      &kp  UP       &kp  RSHFT
-&kp  LCTRL    &kp  LGUI     &kp  LALT                   &kp  ESC      &kp  BSLH   &ht  LSHIFT TAB  &kp  ENTER          &lt  NUM SPACE  &kp  BSPC     &kp  RALT     &kp  RGUI                   &kp  LEFT     &kp  DOWN     &kp  RIGHT
+&kp ESC      &kp Q        &kp W        &kp E        &kp R        &kp T                                                                                &kp Y        &kp U        &kp I        &kp O        &kp P        &kp BSPC
+&kp TAB     HRML(A,           S,           D,           F)       &kp G                                                                                &kp H       HRMR(J,           K,           L,           SEMI)    &kp SQT
+&kp LSHFT    &kp Z        &kp X        &kp C        &kp V        &kp B          &kp GRAVE                                                &kp FSLH     &kp N        &kp M        &kp COMMA    &kp DOT      &kp UP       &kp RSHFT
+&kp LCTRL    &kp LGUI     &kp LALT                  &kp ESC      &lt NUM TAB    &kp ENTER    &ht LSHIFT SPACE           &lt NUM SPACE    &kp BSPC     &kp RGUI     &kp RALT                  &kp LEFT     &kp DOWN     &kp RIGHT
                         >;
                 };
 
                 num_layer {
-/* NUM — left-hand number pad (hold SPACE with the right thumb to reach it,
- *       then type numbers with the left hand; Shift + pad = symbols). Right
- *       hand holds brackets, Bluetooth and media. Same fixed arrow-T.
- * -------------------------------------------------------------------------------------------------------------------------------------
- * |      |   7   |   8   |   9   |   -   |   =   |-----------------------------------|  BT0  |  BT1  |  BT2  |  BT3  |  BT4  |       |
- * |      |   4   |   5   |   6   |       |       |-----------------------------------| Prev  | Play  | Next  |   [   |   ]   |       |
- * |      |   1   |   2   |   3   |   0   |   .   |       |-------------------| BTCLR | Vol-  | Vol+  | Bri-  | Bri+  |  Up   |       |
- * |      |       |       |-------|       |       |       |       |---|       |       |       |       |-------| Left  | Down  | Right |
- */
                         bindings = <
-&trans        &kp  N7       &kp  N8       &kp  N9       &kp  MINUS    &kp  EQUAL                                                                     &bt  BT_SEL 0 &bt  BT_SEL 1 &bt  BT_SEL 2 &bt  BT_SEL 3 &bt  BT_SEL 4 &trans
-&trans        &kp  N4       &kp  N5       &kp  N6       &trans        &trans                                                                         &kp  C_PREV   &kp  C_PP     &kp  C_NEXT   &kp  LBKT     &kp  RBKT     &trans
-&trans        &kp  N1       &kp  N2       &kp  N3       &kp  N0       &kp  DOT      &trans                                             &bt  BT_CLR   &kp  C_VOL_DN &kp  C_VOL_UP &kp  C_BRI_DN &kp  C_BRI_UP &kp  UP       &trans
-&trans        &trans        &trans                      &trans        &trans        &trans        &trans                 &trans        &trans        &trans        &trans                      &kp  LEFT     &kp  DOWN     &kp  RIGHT
+&trans      &kp N7        &kp N8       &kp N9      &kp EQUAL     &trans                                                                               &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL_4  &bt BT_CLR
+&trans     HRML(N4,           N5,          N6,         MINUS)    &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
+&trans      &kp N1        &kp N2       &kp N3      &kp N0        &trans          &trans                                                  &kp BSLH     &trans         &trans         &kp LBKT      &kp RBKT      &trans        &trans
+&trans      &trans        &trans                   &trans        &trans          &trans      &trans                      &trans          &trans       &trans         &trans                       &trans        &trans        &trans
                         >;
                 };
         };
