@@ -1,0 +1,74 @@
+name: Draw keymap
+
+# When a .keymap file lands on main, regenerate docs/keymap.png from the
+# hillside52 keymap using keymap-drawer (https://keymap-drawer.streamlit.app
+# is the hosted webapp; this uses the same project's Python CLI) and commit
+# the refreshed image back to main.
+#
+# The path filter below only fires on *.keymap changes, so the follow-up
+# commit that touches docs/keymap.png does NOT retrigger this workflow (and
+# it also carries [skip ci] as a belt-and-suspenders guard).
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.keymap'
+  workflow_dispatch:
+
+# Serialize runs so two quick pushes can't race on the same commit/push.
+concurrency:
+  group: draw-keymap-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install keymap-drawer
+        # tree-sitter / tree-sitter-devicetree are pinned: newer tree-sitter
+        # releases (>=0.25) dropped the Language.query API that keymap-drawer
+        # 0.21 relies on, which breaks parsing. Update these together with
+        # keymap-drawer when you bump it.
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install \
+            "keymap-drawer==0.21.0" \
+            "tree-sitter==0.24.0" \
+            "tree-sitter-devicetree==0.14.0"
+
+      - name: Install SVG -> PNG converter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends librsvg2-bin
+
+      - name: Generate keymap image
+        run: |
+          set -euo pipefail
+          keymap parse -z config/hillside52.keymap > /tmp/keymap.yaml
+          keymap draw /tmp/keymap.yaml > /tmp/keymap.svg
+          rsvg-convert /tmp/keymap.svg -o docs/keymap.png
+
+      - name: Commit updated keymap image
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- docs/keymap.png; then
+            echo "docs/keymap.png is already up to date; nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/keymap.png
+          git commit -m "docs: regenerate keymap.png from ${GITHUB_SHA::7} [skip ci]"
+          git push origin HEAD:main
