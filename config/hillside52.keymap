@@ -75,16 +75,16 @@
  *        arrow cluster (Up over Left-Down-Right, bottom right) is hard-wired
  *        here and on NUM so it never moves or changes with mods/layers.
  * -------------------------------------------------------------------------------------------------------------------------------------
- * |  `~  |   Q   |   W   |   E   |   R   |   T   |-----------------------------------|   Y   |   U   |   I   |   O   |   P   |   /   |
- * | TAB  |   A   |   S   |   D   |   F   |   G   |-----------------------------------|   H   |   J   |   K   |   L   | BSPC  |   \   |
- * | SHFT |   Z   |   X   |   C   |   V   |   B   |   '   |-------------------|   ;   |   N   |   M   |   ,   |   .   |  Up   | SHFT  |
- * | CTRL | GUI   | ALT   |-------|  ESC  | ENTER |SHFT/TB| ENTER |---|SPC/NUM| BSPC  |  ALT  |  GUI  |-------| Left  | Down  | Right |
+ * |  `~  |   Q   |   W   |   E   |   R   |   T   |-----------------------------------|   Y   |   U   |   I   |   O   |   P   | BSPC  |
+ * | TAB  |   A   |   S   |   D   |   F   |   G   |-----------------------------------|   H   |   J   |   K   |   L   |   ;   | ENTER |
+ * | SHFT |   Z   |   X   |   C   |   V   |   B   |   '   |-------------------|   /   |   N   |   M   |   ,   |   .   |  Up   | SHFT  |
+ * | CTRL | GUI   | ALT   |-------|  ESC  |   \   |SHFT/TB| ENTER |---|SPC/NUM| BSPC  |  ALT  |  GUI  |-------| Left  | Down  | Right |
  */
                         bindings = <
-&kp  GRAVE    &kp  Q        &kp  W        &kp  E        &kp  R        &kp  T                                                                         &kp  Y        &kp  U        &kp  I        &kp  O        &kp  P        &kp  FSLH
-&kp  TAB      HRML(A,           S,            D,            F)        &kp  G                                                                         &kp  H        HRMR(J,           K,            L,            BSPC)     &kp  BSLH
-&kp  LSHFT    &kp  Z        &kp  X        &kp  C        &kp  V        &kp  B        &kp  SQT                                           &kp  SEMI     &kp  N        &kp  M        &kp  COMMA    &kp  DOT      &kp  UP       &kp  RSHFT
-&kp  LCTRL    &kp  LGUI     &kp  LALT                   &kp  ESC      &kp  ENTER  &ht  LSHIFT TAB  &kp  ENTER          &lt  NUM SPACE  &kp  BSPC     &kp  RALT     &kp  RGUI                   &kp  LEFT     &kp  DOWN     &kp  RIGHT
+&kp  GRAVE    &kp  Q        &kp  W        &kp  E        &kp  R        &kp  T                                                                         &kp  Y        &kp  U        &kp  I        &kp  O        &kp  P        &kp  BSPC
+&kp  TAB      HRML(A,           S,            D,            F)        &kp  G                                                                         &kp  H        HRMR(J,           K,            L,            SEMI)     &kp  ENTER
+&kp  LSHFT    &kp  Z        &kp  X        &kp  C        &kp  V        &kp  B        &kp  SQT                                           &kp  FSLH     &kp  N        &kp  M        &kp  COMMA    &kp  DOT      &kp  UP       &kp  RSHFT
+&kp  LCTRL    &kp  LGUI     &kp  LALT                   &kp  ESC      &kp  BSLH   &ht  LSHIFT TAB  &kp  ENTER          &lt  NUM SPACE  &kp  BSPC     &kp  RALT     &kp  RGUI                   &kp  LEFT     &kp  DOWN     &kp  RIGHT
                         >;
                 };
 
