@@ -25,6 +25,20 @@
 #define KEYS_R 6 7 8 9 10 11 18 19 20 21 22 23 31 32 33 34 35 36 37 49 50 51 // right-hand keys
 #define THUMBS 41 42 43 44 45 46 47 48                                       // thumb keys
 
+/* Layer-tap, used by the thumb keys `&lt NUM TAB` and `&lt NUM SPACE`.
+ *
+ * ZMK's stock `&lt` is `tap-preferred`, which only resolves a hold when the
+ * tapping term expires -- pressing and releasing another key while it is held
+ * does NOT trigger the hold. So a quick layer chord (hold the thumb, tap a
+ * key, release) completed inside 200ms emits SPACE plus that key instead of
+ * the layer keycode. `balanced` resolves the hold as soon as another key is
+ * pressed and released, which is exactly what a layer chord looks like. */
+&lt {
+        flavor = "balanced";
+        tapping-term-ms = <200>;
+        quick-tap-ms = <175>;
+};
+
 / {
         behaviors {
                 // Thumb hold-tap (tap = TAB, hold = SHIFT). Timeless flavor,
