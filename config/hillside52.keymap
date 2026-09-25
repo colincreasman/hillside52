@@ -113,7 +113,7 @@
                 compatible = "zmk,combos";
                 combo_maintenance_layer {
                         timeout-ms = <100>;
-                        key-positions = <44 45>;
+                        key-positions = <41 48>;
                         bindings = <&mo SYS>;
                         layers = <BASE NUM>;
                 };
