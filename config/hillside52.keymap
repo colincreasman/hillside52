@@ -10,6 +10,7 @@
 
 #define BASE 0
 #define NUM  1
+#define SYS  2
 
 /* Home row mods (tap = key, hold = mod). The dedicated modifier keys on the
  * base layer are the PRIMARY way to use mods; these home-row holds are an
@@ -99,6 +100,23 @@
                         require-prior-idle-ms = <150>;
                         bindings = <&kp>, <&kp>;
                 };
+
+                bhold: bootloader_hold {
+                        compatible = "zmk,behavior-long-press";
+                        #binding-cells = <0>;
+                        duration-ms = <2000>;
+                        bindings = <&bootloader>;
+                };
+        };
+
+        combos {
+                compatible = "zmk,combos";
+                combo_maintenance_layer {
+                        timeout-ms = <100>;
+                        key-positions = <44 45>;
+                        bindings = <&mo SYS>;
+                        layers = <BASE NUM>;
+                };
         };
 
         keymap {
@@ -115,10 +133,19 @@
 
                 num_layer {
                         bindings = <
-&trans      &kp N7        &kp N8       &kp N9      &kp EQUAL     &trans                                                                               &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR
+&trans      &kp N7        &kp N8       &kp N9      &kp EQUAL     &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
 &trans     HRML(N4,           N5,          N6,         MINUS)    &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
 &trans      &kp N1        &kp N2       &kp N3      &kp N0        &trans          &trans                                                  &kp BSLH     &trans         &trans         &kp LBKT      &kp RBKT      &trans        &trans
 &trans      &trans        &trans                   &trans        &trans          &trans      &trans                      &trans          &trans       &trans         &trans                       &trans        &trans        &trans
+                        >;
+                };
+
+                sys_layer {
+                        bindings = <
+&bhold      &trans        &trans       &trans       &trans        &bt BT_CLR                                                                           &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bhold
+&trans      &trans        &trans       &trans       &trans        &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
+&trans      &trans        &trans       &trans       &trans        &trans          &trans                                                  &trans       &trans         &trans         &trans         &trans        &trans        &trans
+&trans      &trans        &trans                    &trans        &trans          &trans      &trans                      &trans          &trans       &trans         &trans                       &trans        &trans        &trans
                         >;
                 };
         };
