@@ -107,6 +107,18 @@
                         duration-ms = <2000>;
                         bindings = <&bootloader>;
                 };
+
+                // Same 2s hold, retargeted at the split central via `central`. In
+                // dongle mode that is the keyless USB dongle, which otherwise can
+                // only reach its UF2 bootloader by opening its case. Standalone, the
+                // central is the left half, so this just duplicates the left hold.
+                bhold_dongle: bootloader_hold_dongle {
+                        compatible = "zmk,behavior-long-press";
+                        #binding-cells = <0>;
+                        duration-ms = <2000>;
+                        bindings = <&bootloader>;
+                        central;
+                };
         };
 
         combos {
@@ -123,6 +135,7 @@
                 compatible = "zmk,keymap";
 
                 base_layer {
+                        display-name = "ABC";
                         bindings = <
 &kp ESC      &kp Q        &kp W        &kp E        &kp R        &kp T                                                                                &kp Y        &kp U        &kp I        &kp O        &kp P        &kp BSPC
 &kp TAB     HRML(A,           S,           D,           F)       &kp G                                                                                &kp H       HRMR(J,           K,           L,           SEMI)    &kp SQT
@@ -132,6 +145,7 @@
                 };
 
                 num_layer {
+                        display-name = "NUM";
                         bindings = <
 &trans      &kp N7        &kp N8       &kp N9      &kp EQUAL     &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
 &trans     HRML(N4,           N5,          N6,         MINUS)    &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
@@ -141,9 +155,10 @@
                 };
 
                 sys_layer {
+                        display-name = "SYS";
                         bindings = <
 &bhold      &trans        &trans       &trans       &trans        &bt BT_CLR                                                                           &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bhold
-&trans      &trans        &trans       &trans       &trans        &trans                                                                               &trans         &trans         &trans        &trans        &trans        &trans
+&trans      &trans        &trans       &trans       &trans        &bhold_dongle                                                                        &trans         &trans         &trans        &trans        &trans        &trans
 &trans      &trans        &trans       &trans       &trans        &trans          &trans                                                  &trans       &trans         &trans         &trans         &trans        &trans        &trans
 &trans      &trans        &trans                    &trans        &trans          &trans      &trans                      &trans          &trans       &trans         &trans                       &trans        &trans        &trans
                         >;

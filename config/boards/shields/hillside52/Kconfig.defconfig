@@ -6,12 +6,32 @@ if SHIELD_HILLSIDE52_LEFT
 config ZMK_KEYBOARD_NAME
     default "Hillside52"
 
-config ZMK_SPLIT_BLE_ROLE_CENTRAL
+# Central in standalone mode. This used to set ZMK's legacy
+# ZMK_SPLIT_BLE_ROLE_CENTRAL, which forces ZMK_SPLIT_ROLE_CENTRAL on through a
+# `select` that no build argument can override, so the left half could never be
+# rebuilt as a dongle peripheral. A plain default on the modern symbol gives the
+# same standalone result, and the dongle-mode build of this half overrides it
+# with -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n (see build.yaml).
+config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif
 
-if SHIELD_HILLSIDE52_LEFT || SHIELD_HILLSIDE52_RIGHT
+if SHIELD_HILLSIDE52_DONGLE
+
+config ZMK_KEYBOARD_NAME
+    default "Hillside52 Dongle"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+# Both keyboard halves are peripherals of the dongle.
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+endif
+
+if SHIELD_HILLSIDE52_LEFT || SHIELD_HILLSIDE52_RIGHT || SHIELD_HILLSIDE52_DONGLE
 
 config ZMK_SPLIT
     default y

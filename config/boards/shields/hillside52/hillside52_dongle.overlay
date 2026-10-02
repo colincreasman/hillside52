@@ -1,0 +1,37 @@
+/*
+ * Hillside52 dongle: a keyless central that owns the keymap, combos and host
+ * connection, with both halves as its peripherals.
+ *
+ * Board-agnostic: any BLE-capable ZMK board works as the dongle. The PandaKB
+ * dongle's OLED wiring lives separately in the pandakb_dongle shield.
+ *
+ * All parts of a split must share the exact same matrix transform, so this
+ * pulls it in from hillside52.dtsi rather than copying it. That also brings the
+ * encoder and sensors nodes along, which the central needs to know about if
+ * the encoders are ever enabled.
+ *
+ * Because this shield lives in the hillside52 folder, Zephyr also applies
+ * boards/nice_nano_v2.overlay to the dongle. It only describes an optional RGB
+ * strip on SPI1, which stays inert unless RGB underglow is enabled, and the
+ * PandaKB OLED uses I2C0, a separate peripheral.
+ */
+
+#include "hillside52.dtsi"
+
+/ {
+    chosen {
+        zmk,kscan = &mock_kscan;
+    };
+
+    mock_kscan: mock_kscan {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+};
+
+// hillside52.dtsi declares the halves' GPIO key matrix, whose column pins are
+// only filled in by each half's own overlay. The dongle has no keys, so the
+// matrix is dropped rather than left behind incomplete.
+/delete-node/ &kscan0;
