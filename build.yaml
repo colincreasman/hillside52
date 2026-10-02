@@ -3,9 +3,24 @@
 # on a brand-new wireless board. Add the 46/48 back here if you ever need them.
 ---
 include:
+  # ---- Standalone mode: the left half is the central ------------------------
   - board: nice_nano_v2
     shield: hillside52_left
+  # The right half is a peripheral in BOTH modes, so this one build serves
+  # standalone and dongle mode alike.
   - board: nice_nano_v2
     shield: hillside52_right
+  # The halves and the dongle are all nice!nanos, so this one image resets any
+  # of them. Needed when switching between standalone and dongle mode.
   - board: nice_nano_v2
     shield: settings_reset
+
+  # ---- Dongle mode: the PandaKB USB dongle is the central -------------------
+  - board: nice_nano_v2
+    shield: hillside52_dongle pandakb_dongle dongle_display
+    artifact-name: hillside52_dongle
+  # Same left half, rebuilt as a plain peripheral of the dongle.
+  - board: nice_nano_v2
+    shield: hillside52_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: hillside52_left_dongle_mode
