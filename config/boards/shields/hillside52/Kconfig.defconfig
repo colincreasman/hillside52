@@ -19,8 +19,10 @@ endif
 
 if SHIELD_HILLSIDE52_DONGLE
 
+# ZMK caps Bluetooth device names at 16 characters, so "Hillside52 Dongle"
+# (17) does not fit.
 config ZMK_KEYBOARD_NAME
-    default "Hillside52 Dongle"
+    default "Hillside Dongle"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
