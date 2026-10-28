@@ -15,7 +15,7 @@
 /* Home row mods (tap = key, hold = mod). The dedicated modifier keys on the
  * base layer are the PRIMARY way to use mods; these home-row holds are an
  * optional second way. Behavior matches the forager / sweep / totemist setup
- * (balanced flavor, 220ms tapping-term, prior-idle guard, and deliberately
+ * (balanced flavor, 190ms tapping-term, prior-idle guard, and deliberately
  * NO cross-hand positional gating -- see the note on hml below). */
 #define HRML(k1,k2,k3,k4) &hml LSHIFT k1 &hml LCTRL k2 &hml LALT k3 &hml LGUI k4
 #define HRMR(k1,k2,k3,k4) &hmr RGUI k1  &hmr RALT k2  &hmr RCTRL k3 &hmr RSHIFT k4
@@ -37,8 +37,8 @@
  * pressed and released, which is exactly what a layer chord looks like. */
 &lt {
         flavor = "balanced";
-        tapping-term-ms = <200>;
-        quick-tap-ms = <175>;
+        tapping-term-ms = <175>;
+        quick-tap-ms = <125>;
 };
 
 / {
@@ -50,8 +50,8 @@
                         compatible = "zmk,behavior-hold-tap";
                         #binding-cells = <2>;
                         flavor = "balanced";
-                        tapping-term-ms = <280>;
-                        quick-tap-ms = <175>;
+                        tapping-term-ms = <255>;
+                        quick-tap-ms = <125>;
                         bindings = <&kp>, <&kp>;
                 };
 
@@ -70,11 +70,12 @@
                  * With the gate removed, `require-prior-idle-ms` is the main
                  * guard against false mods mid-word, and the tapping term is
                  * the window in which a same-hand roll could still resolve as
-                 * a hold (balanced resolves on the other key's release). 220ms
-                 * narrows that window relative to the gated config's 280ms.
+                 * a hold (balanced resolves on the other key's release). 190ms
+                 * with a 100ms prior-idle (was 220/150) biases toward HOLD,
+                 * since missed holds proved far more common than false ones.
                  *
                  * Trade-off: a fast same-hand roll starting on the homerow
-                 * after >150ms idle ("as", "sad") can register a mod. To go
+                 * after >100ms idle ("as", "sad") can register a mod. To go
                  * back, re-add the two properties (KEYS_R THUMBS for hml,
                  * KEYS_L THUMBS for hmr). Note this board also has dedicated
                  * modifier keys on the outer/bottom row, so the homerow holds
@@ -84,9 +85,9 @@
                         compatible = "zmk,behavior-hold-tap";
                         #binding-cells = <2>;
                         flavor = "balanced";
-                        tapping-term-ms = <220>;
-                        quick-tap-ms = <150>;
-                        require-prior-idle-ms = <150>;
+                        tapping-term-ms = <190>;
+                        quick-tap-ms = <120>;
+                        require-prior-idle-ms = <100>;
                         bindings = <&kp>, <&kp>;
                 };
 
@@ -95,9 +96,9 @@
                         compatible = "zmk,behavior-hold-tap";
                         #binding-cells = <2>;
                         flavor = "balanced";
-                        tapping-term-ms = <220>;
-                        quick-tap-ms = <150>;
-                        require-prior-idle-ms = <150>;
+                        tapping-term-ms = <190>;
+                        quick-tap-ms = <120>;
+                        require-prior-idle-ms = <100>;
                         bindings = <&kp>, <&kp>;
                 };
 
